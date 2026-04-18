@@ -14,7 +14,7 @@ part of 'database_provider.dart';
 /// ref.onDispose zamyka połączenie przy zamknięciu aplikacji.
 
 @ProviderFor(appDatabase)
-const appDatabaseProvider = AppDatabaseProvider._();
+final appDatabaseProvider = AppDatabaseProvider._();
 
 /// Dostarcza singleton [AppDatabase] dla całej aplikacji.
 ///
@@ -28,7 +28,7 @@ final class AppDatabaseProvider
   ///
   /// keepAlive: true — nie jest auto-dispose'owany, baza pozostaje otwarta.
   /// ref.onDispose zamyka połączenie przy zamknięciu aplikacji.
-  const AppDatabaseProvider._()
+  AppDatabaseProvider._()
     : super(
         from: null,
         argument: null,
