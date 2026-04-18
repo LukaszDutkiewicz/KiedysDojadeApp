@@ -5,7 +5,13 @@ import 'connection/native.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [])
+class FavoriteStops  extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get stopId => text()();
+  TextColumn get stopName => text()();
+}
+
+@DriftDatabase(tables: [FavoriteStops])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(openConnection());
 
