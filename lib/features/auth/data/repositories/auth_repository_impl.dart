@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:kiedys_dojade/features/auth/data/models/auth_models.dart';
+import 'package:kiedys_dojade/features/auth/domain/repositories/auth_repository.dart';  
 
-class AuthRepository {
+class AuthRepositoryImpl implements AuthRepository {
   final Dio _dio;
-  const AuthRepository(this._dio);
+  const AuthRepositoryImpl(this._dio);
 
   // Backend uses GET /login with a request body (as per API spec)
   Future<String> login(String email, String password) async {

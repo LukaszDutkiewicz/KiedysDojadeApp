@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:kiedys_dojade/core/api/api_provider.dart';
 import 'package:kiedys_dojade/core/storage/token_storage.dart';
-import 'package:kiedys_dojade/features/auth/data/repositories/auth_repository.dart';
+import 'package:kiedys_dojade/features/auth/domain/usecases/login_usecase.dart';
+import 'package:kiedys_dojade/features/auth/domain/usecases/register_usecase.dart';
 
 part 'auth_provider.g.dart';
 
@@ -15,8 +15,7 @@ class AuthNotifier extends _$AuthNotifier {
   Future<void> login(String email, String password) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final repo = AuthRepository(ref.read(dioProvider));
-      final token = await repo.login(email, password);
+      final token = await ref.read(loginUseCaseProvider)(email, password);
       await _storage.saveToken(token);
       return token;
     });
@@ -25,8 +24,7 @@ class AuthNotifier extends _$AuthNotifier {
   Future<void> register(String email, String password, String username) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final repo = AuthRepository(ref.read(dioProvider));
-      await repo.register(email, password, username);
+      await ref.read(registerUseCaseProvider)(email, password, username);
       return null;
     });
   }
