@@ -1,5 +1,5 @@
+import 'package:kiedys_dojade/core/storage/secure_token_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:kiedys_dojade/core/storage/token_storage.dart';
 import 'package:kiedys_dojade/features/auth/domain/usecases/login_usecase.dart';
 import 'package:kiedys_dojade/features/auth/domain/usecases/register_usecase.dart';
 
@@ -7,7 +7,7 @@ part 'auth_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class AuthNotifier extends _$AuthNotifier {
-  final _storage = TokenStorage();
+  final _storage = SecureTokenStorage();
 
   @override
   Future<String?> build() => _storage.getToken();

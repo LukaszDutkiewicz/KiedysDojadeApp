@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PathItem {
 
- StopModel get stop; String? get line;// Może być null lub "WALK"
+ Stop get stop; String? get line;// Może być null lub "WALK"
 @JsonKey(name: 'departure_time') String? get departureTime;@JsonKey(name: 'arrival_time') String? get arrivalTime;
 /// Create a copy of PathItem
 /// with the given fields replaced by the non-null parameter values.
@@ -49,11 +49,11 @@ abstract mixin class $PathItemCopyWith<$Res>  {
   factory $PathItemCopyWith(PathItem value, $Res Function(PathItem) _then) = _$PathItemCopyWithImpl;
 @useResult
 $Res call({
- StopModel stop, String? line,@JsonKey(name: 'departure_time') String? departureTime,@JsonKey(name: 'arrival_time') String? arrivalTime
+ Stop stop, String? line,@JsonKey(name: 'departure_time') String? departureTime,@JsonKey(name: 'arrival_time') String? arrivalTime
 });
 
 
-$StopModelCopyWith<$Res> get stop;
+$StopCopyWith<$Res> get stop;
 
 }
 /// @nodoc
@@ -69,7 +69,7 @@ class _$PathItemCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? stop = null,Object? line = freezed,Object? departureTime = freezed,Object? arrivalTime = freezed,}) {
   return _then(_self.copyWith(
 stop: null == stop ? _self.stop : stop // ignore: cast_nullable_to_non_nullable
-as StopModel,line: freezed == line ? _self.line : line // ignore: cast_nullable_to_non_nullable
+as Stop,line: freezed == line ? _self.line : line // ignore: cast_nullable_to_non_nullable
 as String?,departureTime: freezed == departureTime ? _self.departureTime : departureTime // ignore: cast_nullable_to_non_nullable
 as String?,arrivalTime: freezed == arrivalTime ? _self.arrivalTime : arrivalTime // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -79,9 +79,9 @@ as String?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$StopModelCopyWith<$Res> get stop {
+$StopCopyWith<$Res> get stop {
   
-  return $StopModelCopyWith<$Res>(_self.stop, (value) {
+  return $StopCopyWith<$Res>(_self.stop, (value) {
     return _then(_self.copyWith(stop: value));
   });
 }
@@ -163,7 +163,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( StopModel stop,  String? line, @JsonKey(name: 'departure_time')  String? departureTime, @JsonKey(name: 'arrival_time')  String? arrivalTime)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Stop stop,  String? line, @JsonKey(name: 'departure_time')  String? departureTime, @JsonKey(name: 'arrival_time')  String? arrivalTime)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PathItem() when $default != null:
 return $default(_that.stop,_that.line,_that.departureTime,_that.arrivalTime);case _:
@@ -184,7 +184,7 @@ return $default(_that.stop,_that.line,_that.departureTime,_that.arrivalTime);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( StopModel stop,  String? line, @JsonKey(name: 'departure_time')  String? departureTime, @JsonKey(name: 'arrival_time')  String? arrivalTime)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Stop stop,  String? line, @JsonKey(name: 'departure_time')  String? departureTime, @JsonKey(name: 'arrival_time')  String? arrivalTime)  $default,) {final _that = this;
 switch (_that) {
 case _PathItem():
 return $default(_that.stop,_that.line,_that.departureTime,_that.arrivalTime);}
@@ -201,7 +201,7 @@ return $default(_that.stop,_that.line,_that.departureTime,_that.arrivalTime);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( StopModel stop,  String? line, @JsonKey(name: 'departure_time')  String? departureTime, @JsonKey(name: 'arrival_time')  String? arrivalTime)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Stop stop,  String? line, @JsonKey(name: 'departure_time')  String? departureTime, @JsonKey(name: 'arrival_time')  String? arrivalTime)?  $default,) {final _that = this;
 switch (_that) {
 case _PathItem() when $default != null:
 return $default(_that.stop,_that.line,_that.departureTime,_that.arrivalTime);case _:
@@ -219,7 +219,7 @@ class _PathItem implements PathItem {
   const _PathItem({required this.stop, this.line, @JsonKey(name: 'departure_time') this.departureTime, @JsonKey(name: 'arrival_time') this.arrivalTime});
   factory _PathItem.fromJson(Map<String, dynamic> json) => _$PathItemFromJson(json);
 
-@override final  StopModel stop;
+@override final  Stop stop;
 @override final  String? line;
 // Może być null lub "WALK"
 @override@JsonKey(name: 'departure_time') final  String? departureTime;
@@ -258,11 +258,11 @@ abstract mixin class _$PathItemCopyWith<$Res> implements $PathItemCopyWith<$Res>
   factory _$PathItemCopyWith(_PathItem value, $Res Function(_PathItem) _then) = __$PathItemCopyWithImpl;
 @override @useResult
 $Res call({
- StopModel stop, String? line,@JsonKey(name: 'departure_time') String? departureTime,@JsonKey(name: 'arrival_time') String? arrivalTime
+ Stop stop, String? line,@JsonKey(name: 'departure_time') String? departureTime,@JsonKey(name: 'arrival_time') String? arrivalTime
 });
 
 
-@override $StopModelCopyWith<$Res> get stop;
+@override $StopCopyWith<$Res> get stop;
 
 }
 /// @nodoc
@@ -278,7 +278,7 @@ class __$PathItemCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? stop = null,Object? line = freezed,Object? departureTime = freezed,Object? arrivalTime = freezed,}) {
   return _then(_PathItem(
 stop: null == stop ? _self.stop : stop // ignore: cast_nullable_to_non_nullable
-as StopModel,line: freezed == line ? _self.line : line // ignore: cast_nullable_to_non_nullable
+as Stop,line: freezed == line ? _self.line : line // ignore: cast_nullable_to_non_nullable
 as String?,departureTime: freezed == departureTime ? _self.departureTime : departureTime // ignore: cast_nullable_to_non_nullable
 as String?,arrivalTime: freezed == arrivalTime ? _self.arrivalTime : arrivalTime // ignore: cast_nullable_to_non_nullable
 as String?,
@@ -289,9 +289,9 @@ as String?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$StopModelCopyWith<$Res> get stop {
+$StopCopyWith<$Res> get stop {
   
-  return $StopModelCopyWith<$Res>(_self.stop, (value) {
+  return $StopCopyWith<$Res>(_self.stop, (value) {
     return _then(_self.copyWith(stop: value));
   });
 }

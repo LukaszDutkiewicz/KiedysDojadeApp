@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'stop_model.dart';
+part of 'stop.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_StopModel _$StopModelFromJson(Map<String, dynamic> json) => _StopModel(
+_Stop _$StopFromJson(Map<String, dynamic> json) => _Stop(
   id: (json['id'] as num).toInt(),
   code: json['code'] as String,
   name: json['name'] as String,
@@ -15,12 +15,11 @@ _StopModel _$StopModelFromJson(Map<String, dynamic> json) => _StopModel(
   zoneId: json['zone_id'] as String,
 );
 
-Map<String, dynamic> _$StopModelToJson(_StopModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'code': instance.code,
-      'name': instance.name,
-      'lat': instance.lat,
-      'lon': instance.lon,
-      'zone_id': instance.zoneId,
-    };
+Map<String, dynamic> _$StopToJson(_Stop instance) => <String, dynamic>{
+  'id': instance.id,
+  'code': instance.code,
+  'name': instance.name,
+  'lat': instance.lat,
+  'lon': instance.lon,
+  'zone_id': instance.zoneId,
+};

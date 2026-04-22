@@ -7,7 +7,7 @@ part of 'path_item.dart';
 // **************************************************************************
 
 _PathItem _$PathItemFromJson(Map<String, dynamic> json) => _PathItem(
-  stop: StopModel.fromJson(json['stop'] as Map<String, dynamic>),
+  stop: Stop.fromJson(json['stop'] as Map<String, dynamic>),
   line: json['line'] as String?,
   departureTime: json['departure_time'] as String?,
   arrivalTime: json['arrival_time'] as String?,

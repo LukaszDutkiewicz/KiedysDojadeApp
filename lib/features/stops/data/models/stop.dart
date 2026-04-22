@@ -1,19 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'stop_model.freezed.dart';
-part 'stop_model.g.dart';
+part 'stop.freezed.dart';
+part 'stop.g.dart';
 
 @freezed
-sealed class StopModel with _$StopModel {
-  const factory StopModel({
+sealed class Stop with _$Stop {
+  const factory Stop({
     required int id,
     required String code,
     required String name,
     required double lat,
     required double lon,
     @JsonKey(name: 'zone_id') required String zoneId,
-  }) = _StopModel;
+  }) = _Stop;
 
-  factory StopModel.fromJson(Map<String, dynamic> json) => 
-      _$StopModelFromJson(json);
+  factory Stop.fromJson(Map<String, dynamic> json) => 
+      _$StopFromJson(json);
 }
