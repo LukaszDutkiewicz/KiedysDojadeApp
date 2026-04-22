@@ -5,6 +5,8 @@ import 'package:kiedys_dojade/features/auth/presentation/providers/auth_provider
 import 'package:kiedys_dojade/features/auth/presentation/screens/login_screen.dart';
 import 'package:kiedys_dojade/features/auth/presentation/screens/register_screen.dart';
 import 'package:kiedys_dojade/shared/pages/error_page.dart';
+import 'package:kiedys_dojade/features/navigation/domain/entities/path_item.dart';
+import 'package:kiedys_dojade/features/navigation/presentation/screens/path_map_screen.dart';
 import 'package:kiedys_dojade/shared/pages/home_screen.dart';
 
 part 'app_router.g.dart';
@@ -51,6 +53,12 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: '/home',
         builder: (_, __) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/path-map',
+        builder: (_, state) => PathMapScreen(
+          proposal: state.extra as PathProposal,
+        ),
       ),
     ],
     errorBuilder: (context, state) => DemoErrorScreen(

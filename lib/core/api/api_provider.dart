@@ -30,5 +30,6 @@ Dio dio(Ref ref) {
     receiveTimeout: const Duration(seconds: 10),
   ));
   dio.interceptors.add(_AuthInterceptor(tokenStorage));
+  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
   return dio;
 }

@@ -55,4 +55,4 @@ final class NavigationRepositoryProvider
 }
 
 String _$navigationRepositoryHash() =>
-    r'395b367dbe11f0fb9f6f38fd0251a4ea2c6e6948';
+    r'9e825ff0b937cd2565c459ad98da44ed9f33eed0';

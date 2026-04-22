@@ -23,6 +23,10 @@ dependencies:
   dio: ^5.9.2
   shared_preferences: ^2.3.0
   flutter_secure_storage: ^9.2.4
+  flutter_map: ^8.3.0
+  flutter_map_location_marker: ^10.2.0
+  latlong2: ^0.9.1
+  flutter_polyline_points: ^3.1.0
 
 dev_dependencies:
   flutter_test:

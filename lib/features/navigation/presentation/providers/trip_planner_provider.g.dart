@@ -42,7 +42,7 @@ final class TripPlannerNotifierProvider
 }
 
 String _$tripPlannerNotifierHash() =>
-    r'24ce3e1a2b3e95cb3d0bef728d7d023d6596d973';
+    r'c4a03f7ef403383222be640ae3c120a956b9f55d';
 
 abstract class _$TripPlannerNotifier
     extends $Notifier<AsyncValue<PathResponse?>> {

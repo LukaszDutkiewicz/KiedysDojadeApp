@@ -1,5 +1,5 @@
-import 'package:kiedys_dojade/features/navigation/data/models/path_item.dart';
-import 'package:kiedys_dojade/features/navigation/data/repositories/navigation_repository_provider.dart';
+import 'package:kiedys_dojade/features/navigation/domain/entities/path_item.dart';
+import 'package:kiedys_dojade/features/navigation/domain/usecases/get_path_usecase.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'trip_planner_provider.g.dart';
@@ -12,7 +12,7 @@ class TripPlannerNotifier extends _$TripPlannerNotifier {
   Future<void> search(String sourceCode, String destCode, String time) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(
-      () => ref.read(navigationRepositoryProvider).getPath(sourceCode, destCode, time, null),
+      () => ref.read(getPathUseCaseProvider)(sourceCode, destCode, time),
     );
   }
 }

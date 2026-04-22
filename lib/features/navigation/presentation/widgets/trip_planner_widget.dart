@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kiedys_dojade/features/navigation/data/models/path_item.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kiedys_dojade/features/navigation/domain/entities/path_item.dart';
 import 'package:kiedys_dojade/features/navigation/presentation/providers/trip_planner_provider.dart';
 import 'package:kiedys_dojade/features/stops/domain/entities/stop_group.dart';
 import 'package:kiedys_dojade/features/stops/presentation/providers/stop_groups_provider.dart';
@@ -161,6 +162,10 @@ class _ProposalTile extends StatelessWidget {
       subtitle: Text(
         '${first.stop.name} → ${last.stop.name}'
         '  ${first.departureTime ?? ''}–${last.arrivalTime ?? ''}',
+      ),
+      trailing: IconButton(
+        icon: const Icon(Icons.map_outlined),
+        onPressed: () => context.push('/path-map', extra: proposal),
       ),
       children: proposal
           .map(
