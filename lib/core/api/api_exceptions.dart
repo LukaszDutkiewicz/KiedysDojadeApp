@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 sealed class ApiException implements Exception {
   final String message;
@@ -38,6 +39,7 @@ class UnknownApiException extends ApiException {
 }
 
 ApiException mapDioException(DioException e) {
+  debugPrint('[API ERROR] type=${e.type} status=${e.response?.statusCode} message=${e.message} data=${e.response?.data} error=${e.error}');
   switch (e.type) {
     case DioExceptionType.connectionError:
       return const NetworkException();

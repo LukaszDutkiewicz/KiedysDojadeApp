@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:kiedys_dojade/features/navigation/data/models/path_item.dart';
+import 'package:kiedys_dojade/features/navigation/domain/entities/path_item.dart';
 import 'package:kiedys_dojade/features/navigation/data/repositories/navigation_repository.dart';
 import 'package:kiedys_dojade/core/api/api_provider.dart';
 
