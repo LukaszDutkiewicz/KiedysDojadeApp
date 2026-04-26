@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:kiedys_dojade/core/api/api_exceptions.dart';
-import 'package:kiedys_dojade/features/stops/domain/entities/stop.dart';
-import 'package:kiedys_dojade/features/stops/domain/entities/stop_group.dart';
-import 'package:kiedys_dojade/features/stops/domain/repositories/stops_repository.dart';
+import 'package:kiedys_dojade/shared/domain/entities/stop.dart';
+import 'package:kiedys_dojade/shared/domain/entities/stop_group.dart';
+import 'package:kiedys_dojade/shared/domain/repositories/stops_repository.dart';
 
 class StopsRepositoryImpl implements StopsRepository {
   final Dio _dio;

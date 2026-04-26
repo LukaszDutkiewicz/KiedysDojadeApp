@@ -1,5 +1,5 @@
-import 'package:kiedys_dojade/features/stops/domain/entities/stop.dart';
-import 'package:kiedys_dojade/features/stops/domain/entities/stop_group.dart';
+import 'package:kiedys_dojade/shared/domain/entities/stop.dart';
+import 'package:kiedys_dojade/shared/domain/entities/stop_group.dart';
 
 abstract interface class StopsRepository {
   Future<List<Stop>> getStops();

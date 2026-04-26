@@ -1,8 +1,8 @@
 import 'package:kiedys_dojade/core/api/api_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:kiedys_dojade/features/stops/domain/entities/stop.dart';
-import 'package:kiedys_dojade/features/stops/domain/repositories/stops_repository.dart';
-import 'package:kiedys_dojade/features/stops/data/repositories/stops_repository_impl.dart';
+import 'package:kiedys_dojade/shared/domain/entities/stop.dart';
+import 'package:kiedys_dojade/shared/domain/repositories/stops_repository.dart';
+import 'package:kiedys_dojade/shared/data/repositories/stops_repository_impl.dart';
 
 
 part 'stops_repository_provider.g.dart';

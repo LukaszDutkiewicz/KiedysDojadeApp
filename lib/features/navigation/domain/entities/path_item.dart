@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:kiedys_dojade/features/stops/domain/entities/stop.dart'; // Importujesz model Stopa, który robiliśmy wcześniej
+import 'package:kiedys_dojade/shared/domain/entities/stop.dart'; // Importujesz model Stopa, który robiliśmy wcześniej
 
 part 'path_item.freezed.dart';
 part 'path_item.g.dart';

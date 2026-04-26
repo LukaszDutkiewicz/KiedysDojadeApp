@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kiedys_dojade/features/history/presentation/providers/history_provider.dart';
 import 'package:kiedys_dojade/features/navigation/domain/entities/path_item.dart';
 import 'package:kiedys_dojade/features/navigation/presentation/providers/trip_planner_provider.dart';
-import 'package:kiedys_dojade/features/stops/domain/entities/stop_group.dart';
-import 'package:kiedys_dojade/features/stops/presentation/providers/stop_groups_provider.dart';
+import 'package:kiedys_dojade/shared/domain/entities/stop_group.dart';
+import 'package:kiedys_dojade/shared/presentation/providers/stop_groups_provider.dart';
 
 class TripPlannerWidget extends ConsumerStatefulWidget {
-  const TripPlannerWidget({super.key});
+  const TripPlannerWidget({
+    super.key,
+    this.initialSourceCode,
+    this.initialSourceName,
+    this.initialDestCode,
+    this.initialDestName,
+    this.initialTime,
+  });
+
+  final String? initialSourceCode;
+  final String? initialSourceName;
+  final String? initialDestCode;
+  final String? initialDestName;
+  final String? initialTime;
 
   @override
   ConsumerState<TripPlannerWidget> createState() => _TripPlannerWidgetState();
@@ -17,6 +31,37 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
   StopGroup? _source;
   StopGroup? _destination;
   TimeOfDay _time = TimeOfDay.now();
+
+  @override
+  void initState() {
+    super.initState();
+    final w = widget;
+    if (w.initialSourceCode != null && w.initialSourceName != null) {
+      _source = StopGroup(
+        groupCode: w.initialSourceCode!,
+        groupName: w.initialSourceName!,
+        lat: 0,
+        lon: 0,
+      );
+    }
+    if (w.initialDestCode != null && w.initialDestName != null) {
+      _destination = StopGroup(
+        groupCode: w.initialDestCode!,
+        groupName: w.initialDestName!,
+        lat: 0,
+        lon: 0,
+      );
+    }
+    if (w.initialTime != null) {
+      final parts = w.initialTime!.split(':');
+      if (parts.length == 2) {
+        _time = TimeOfDay(
+          hour: int.tryParse(parts[0]) ?? TimeOfDay.now().hour,
+          minute: int.tryParse(parts[1]) ?? TimeOfDay.now().minute,
+        );
+      }
+    }
+  }
 
   String _formatTime(TimeOfDay t) =>
       '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
@@ -39,6 +84,22 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(tripPlannerProvider, (prev, next) {
+      if (prev?.isLoading == true && next.hasValue && next.value != null) {
+        final src = _source;
+        final dst = _destination;
+        if (src != null && dst != null) {
+          ref.read(historyProvider.notifier).add(
+                sourceCode: src.groupCode,
+                sourceName: src.groupName,
+                destCode: dst.groupCode,
+                destName: dst.groupName,
+                departureTime: _formatTime(_time),
+              );
+        }
+      }
+    });
+
     final stopGroupsAsync = ref.watch(stopGroupsProvider);
     final results = ref.watch(tripPlannerProvider);
 
@@ -66,12 +127,14 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
         _StopGroupAutocomplete(
           label: 'Skąd',
           groups: groups,
+          initialName: widget.initialSourceName,
           onSelected: (g) => setState(() => _source = g),
         ),
         const SizedBox(height: 12),
         _StopGroupAutocomplete(
           label: 'Dokąd',
           groups: groups,
+          initialName: widget.initialDestName,
           onSelected: (g) => setState(() => _destination = g),
         ),
         const SizedBox(height: 12),
@@ -109,7 +172,8 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Text('Błąd: $e', style: TextStyle(color: Theme.of(context).colorScheme.error)),
+      error: (e, _) => Text('Błąd: $e',
+          style: TextStyle(color: Theme.of(context).colorScheme.error)),
     );
   }
 }
@@ -119,15 +183,19 @@ class _StopGroupAutocomplete extends StatelessWidget {
     required this.label,
     required this.groups,
     required this.onSelected,
+    this.initialName,
   });
 
   final String label;
   final List<StopGroup> groups;
   final ValueChanged<StopGroup> onSelected;
+  final String? initialName;
 
   @override
   Widget build(BuildContext context) {
     return Autocomplete<StopGroup>(
+      initialValue:
+          initialName != null ? TextEditingValue(text: initialName!) : null,
       displayStringForOption: (g) => g.groupName,
       optionsBuilder: (value) {
         if (value.text.isEmpty) return const [];
@@ -174,7 +242,8 @@ class _ProposalTile extends StatelessWidget {
                   ? Chip(label: Text(item.line!))
                   : const SizedBox(width: 40),
               title: Text(item.stop.name),
-              trailing: Text('${item.departureTime ?? ''}→${item.arrivalTime ?? ''}'),
+              trailing: Text(
+                  '${item.departureTime ?? ''}→${item.arrivalTime ?? ''}'),
             ),
           )
           .toList(),
