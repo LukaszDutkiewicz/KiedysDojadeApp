@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kiedys_dojade/features/history/presentation/providers/history_provider.dart';
 import 'package:kiedys_dojade/features/navigation/domain/entities/path_item.dart';
+import 'package:kiedys_dojade/features/navigation/domain/usecases/get_closest_stop_usecase.dart';
 import 'package:kiedys_dojade/features/navigation/presentation/providers/trip_planner_provider.dart';
 import 'package:kiedys_dojade/shared/domain/entities/stop_group.dart';
 import 'package:kiedys_dojade/shared/presentation/providers/stop_groups_provider.dart';
@@ -31,6 +33,7 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
   StopGroup? _source;
   StopGroup? _destination;
   TimeOfDay _time = TimeOfDay.now();
+  int _sourceKey = 0;
 
   @override
   void initState() {
@@ -69,6 +72,36 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
   Future<void> _pickTime() async {
     final picked = await showTimePicker(context: context, initialTime: _time);
     if (picked != null) setState(() => _time = picked);
+  }
+
+  Future<void> _fillFromLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    if (permission == LocationPermission.deniedForever ||
+        permission == LocationPermission.denied) return;
+
+    final position = await Geolocator.getCurrentPosition();
+    if (!mounted) return;
+
+    try {
+      final stops = await ref.read(getClosestStopUseCaseProvider)(
+        position.latitude,
+        position.longitude,
+      );
+      if (stops.isEmpty) return;
+      setState(() {
+        _source = stops.first;
+        _sourceKey++;
+      });
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Nie udało się pobrać najbliższego przystanku.')),
+        );
+      }
+    }
   }
 
   void _search() {
@@ -124,11 +157,24 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _StopGroupAutocomplete(
-          label: 'Skąd',
-          groups: groups,
-          initialName: widget.initialSourceName,
-          onSelected: (g) => setState(() => _source = g),
+        Row(
+          children: [
+            Expanded(
+              child: _StopGroupAutocomplete(
+                key: ValueKey('source_$_sourceKey'),
+                label: 'Skąd',
+                groups: groups,
+                initialName: _source?.groupName ?? widget.initialSourceName,
+                onSelected: (g) => setState(() => _source = g),
+              ),
+            ),
+            const SizedBox(width: 8),
+            IconButton.filled(
+              icon: const Icon(Icons.my_location),
+              tooltip: 'Najbliższy przystanek',
+              onPressed: _fillFromLocation,
+            ),
+          ],
         ),
         const SizedBox(height: 12),
         _StopGroupAutocomplete(
@@ -180,6 +226,7 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
 
 class _StopGroupAutocomplete extends StatelessWidget {
   const _StopGroupAutocomplete({
+    super.key,
     required this.label,
     required this.groups,
     required this.onSelected,
