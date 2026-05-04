@@ -34,6 +34,11 @@ class HomeScreen extends ConsumerWidget {
             label: 'Historia',
             onTap: () => context.push('/history'),
           ),
+          _HomeTile(
+            icon: Icons.schedule,
+            label: 'Rozkład jazdy',
+            onTap: () => context.push('/stop-times'),
+          ),
         ],
       ),
     );

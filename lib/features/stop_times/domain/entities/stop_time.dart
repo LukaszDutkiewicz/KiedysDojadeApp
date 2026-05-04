@@ -4,7 +4,7 @@ part 'stop_time.freezed.dart';
 part 'stop_time.g.dart';
 
 @freezed
-class StopTime with _$StopTime {
+sealed class StopTime with _$StopTime {
   const factory StopTime({
     @JsonKey(name: 'trip_id') required String tripId,
     @JsonKey(name: 'arrival_time') required String arrivalTime,

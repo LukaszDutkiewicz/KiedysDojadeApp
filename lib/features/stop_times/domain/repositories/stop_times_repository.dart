@@ -3,7 +3,6 @@ import '../entities/stop_time.dart';
 
 
 abstract class StopTimesRepository {
-  Future<List<Stop>> searchStopsByName(String query);
   Future<List<StopTime>> getStopTimes(String stopCode);
 
 }

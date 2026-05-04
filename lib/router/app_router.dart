@@ -10,6 +10,9 @@ import 'package:kiedys_dojade/features/navigation/presentation/screens/path_map_
 import 'package:kiedys_dojade/features/navigation/presentation/screens/trip_planner_screen.dart';
 import 'package:kiedys_dojade/features/history/domain/entities/trip_history.dart';
 import 'package:kiedys_dojade/features/history/presentation/screens/history_screen.dart';
+import 'package:kiedys_dojade/features/stop_times/presentation/screens/stop_details_screen.dart';
+import 'package:kiedys_dojade/features/stop_times/presentation/screens/stop_times_screen.dart';
+import 'package:kiedys_dojade/shared/domain/entities/stop.dart';
 import 'package:kiedys_dojade/shared/presentation/pages/home_screen.dart';
 
 part 'app_router.g.dart';
@@ -66,6 +69,14 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: '/history',
         builder: (_, __) => const HistoryScreen(),
+      ),
+      GoRoute(
+        path: '/stop-times',
+        builder: (_, __) => const StopTimesScreen(),
+      ),
+      GoRoute(
+        path: '/stop-times/detail',
+        builder: (_, state) => StopDetailsScreen(stop: state.extra as Stop),
       ),
       GoRoute(
         path: '/path-map',

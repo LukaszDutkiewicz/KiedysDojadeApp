@@ -124,10 +124,7 @@ return $default(_that);case _:
 final _that = this;
 switch (_that) {
 case _StopTime():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -186,10 +183,7 @@ return $default(_that.tripId,_that.arrivalTime,_that.departureTime,_that.stopId,
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'trip_id')  String tripId, @JsonKey(name: 'arrival_time')  String arrivalTime, @JsonKey(name: 'departure_time')  String departureTime, @JsonKey(name: 'stop_id')  int stopId, @JsonKey(name: 'stop_sequence')  int stopSequence, @JsonKey(name: 'stop_headsign')  String stopHeadsign, @JsonKey(name: 'route_id')  String routeId, @JsonKey(name: 'pickup_type')  int? pickupType, @JsonKey(name: 'drop_off_type')  int? dropOffType)  $default,) {final _that = this;
 switch (_that) {
 case _StopTime():
-return $default(_that.tripId,_that.arrivalTime,_that.departureTime,_that.stopId,_that.stopSequence,_that.stopHeadsign,_that.routeId,_that.pickupType,_that.dropOffType);case _:
-  throw StateError('Unexpected subclass');
-
-}
+return $default(_that.tripId,_that.arrivalTime,_that.departureTime,_that.stopId,_that.stopSequence,_that.stopHeadsign,_that.routeId,_that.pickupType,_that.dropOffType);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
