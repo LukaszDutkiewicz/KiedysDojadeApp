@@ -21,31 +21,9 @@ class StopsRepositoryImpl implements StopsRepository {
   }
 
   @override
-  Future<Stop> getStopById(String id) async {
-    try {
-      final response = await _dio.get('/stops/$id');
-      return Stop.fromJson(response.data as Map<String, dynamic>);
-    } on DioException catch (e) {
-      throw mapDioException(e);
-    }
-  }
-
-  @override
   Future<List<Stop>> searchStops(String query) async {
     try {
       final response = await _dio.get('/stops/search', queryParameters: {'name': query});
-      return (response.data as List)
-          .map((json) => Stop.fromJson(json as Map<String, dynamic>))
-          .toList();
-    } on DioException catch (e) {
-      throw mapDioException(e);
-    }
-  }
-
-  @override
-  Future<List<Stop>> getStopsByStopCode(String stopCode) async {
-    try {
-      final response = await _dio.get('/stops/code/$stopCode');
       return (response.data as List)
           .map((json) => Stop.fromJson(json as Map<String, dynamic>))
           .toList();

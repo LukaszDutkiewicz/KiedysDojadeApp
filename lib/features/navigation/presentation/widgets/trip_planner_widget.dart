@@ -79,7 +79,14 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
     if (!mounted) return;
 
     final position = ref.read(userLocationProvider).asData?.value;
-    if (position == null) return;
+    if (position == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Nie można pobrać lokalizacji. Sprawdź uprawnienia.'),
+        ),
+      );
+      return;
+    }
 
     try {
       final stops = await ref.read(getClosestStopUseCaseProvider)(
@@ -100,35 +107,32 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
     }
   }
 
-  void _search() {
+  Future<void> _search() async {
     final source = _source;
     final destination = _destination;
     if (source == null || destination == null) return;
-    ref.read(tripPlannerProvider.notifier).search(
+
+    await ref.read(tripPlannerProvider.notifier).search(
           source.groupCode,
           destination.groupCode,
           _formatTime(_time),
         );
+
+    if (!mounted) return;
+    final result = ref.read(tripPlannerProvider);
+    if (result.hasValue && result.value != null) {
+      ref.read(historyProvider.notifier).add(
+            sourceCode: source.groupCode,
+            sourceName: source.groupName,
+            destCode: destination.groupCode,
+            destName: destination.groupName,
+            departureTime: _formatTime(_time),
+          );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(tripPlannerProvider, (prev, next) {
-      if (prev?.isLoading == true && next.hasValue && next.value != null) {
-        final src = _source;
-        final dst = _destination;
-        if (src != null && dst != null) {
-          ref.read(historyProvider.notifier).add(
-                sourceCode: src.groupCode,
-                sourceName: src.groupName,
-                destCode: dst.groupCode,
-                destName: dst.groupName,
-                departureTime: _formatTime(_time),
-              );
-        }
-      }
-    });
-
     final stopGroupsAsync = ref.watch(stopGroupsProvider);
     final results = ref.watch(tripPlannerProvider);
 

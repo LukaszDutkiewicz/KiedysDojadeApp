@@ -70,8 +70,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       prefixIcon: Icon(Icons.email_outlined),
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (v) =>
-                        (v == null || v.isEmpty) ? 'Podaj e-mail' : null,
+                    validator: (v) {
+                      if (v == null || v.isEmpty) return 'Podaj e-mail';
+                      if (!v.contains('@') || !v.contains('.')) {
+                        return 'Podaj poprawny adres e-mail';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
                   TextFormField(

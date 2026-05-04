@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 // Wspólny ekran błędu dla błędnego URL i brakujących danych.
-class DemoErrorScreen extends StatelessWidget {
-  const DemoErrorScreen({
+class ErrorScreen extends StatelessWidget {
+  const ErrorScreen({
     super.key,
     required this.title,
     required this.message,
@@ -39,9 +39,9 @@ class DemoErrorScreen extends StatelessWidget {
               ],
               const SizedBox(height: 24),
               FilledButton.icon(
-                onPressed: () => context.go('/items'),
+                onPressed: () => context.go('/home'),
                 icon: const Icon(Icons.home_outlined),
-                label: const Text('Wróć do listy'),
+                label: const Text('Wróć do ekranu głównego'),
               ),
             ],
           ),

@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 QueryExecutor openConnection() {
   return LazyDatabase(() async {
     final dir = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dir.path, 'shopping.db'));
+    final file = File(p.join(dir.path, 'kiedys_dojade.db'));
     return NativeDatabase.createInBackground(file);
   });
 }

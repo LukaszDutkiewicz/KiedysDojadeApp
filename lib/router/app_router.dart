@@ -85,7 +85,7 @@ GoRouter appRouter(Ref ref) {
         ),
       ),
     ],
-    errorBuilder: (context, state) => DemoErrorScreen(
+    errorBuilder: (context, state) => ErrorScreen(
       title: 'Błąd',
       message: state.error.toString(),
     ),
