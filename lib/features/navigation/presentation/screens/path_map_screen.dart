@@ -1,38 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kiedys_dojade/features/navigation/domain/entities/path_item.dart';
+import 'package:kiedys_dojade/features/navigation/presentation/providers/location_provider.dart';
 import 'package:latlong2/latlong.dart';
 
-class PathMapScreen extends StatefulWidget {
+class PathMapScreen extends ConsumerStatefulWidget {
   final PathProposal proposal;
 
   const PathMapScreen({super.key, required this.proposal});
 
   @override
-  State<PathMapScreen> createState() => _PathMapScreenState();
+  ConsumerState<PathMapScreen> createState() => _PathMapScreenState();
 }
 
-class _PathMapScreenState extends State<PathMapScreen> {
+class _PathMapScreenState extends ConsumerState<PathMapScreen> {
   final _mapController = MapController();
 
   static LatLng _point(PathItem item) => LatLng(item.stop.lat, item.stop.lon);
   static bool _valid(LatLng p) => p.latitude != 0 || p.longitude != 0;
 
   Future<void> _locateMe() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+    await ref.read(userLocationProvider.notifier).fetchLocation(context);
+    final location = ref.read(userLocationProvider).asData?.value;
+    if (location != null && mounted) {
+      _mapController.move(location, 16);
     }
-    if (permission == LocationPermission.deniedForever ||
-        permission == LocationPermission.denied) {
-      return;
-    }
-
-    final position = await Geolocator.getCurrentPosition();
-    if (!mounted) return;
-    _mapController.move(LatLng(position.latitude, position.longitude), 16);
   }
 
   @override
@@ -58,7 +52,8 @@ class _PathMapScreenState extends State<PathMapScreen> {
                   padding: const EdgeInsets.all(60),
                 )
               : null,
-          initialCenter: points.isNotEmpty ? points.first : const LatLng(52.406, 16.925),
+          initialCenter:
+              points.isNotEmpty ? points.first : const LatLng(52.406, 16.925),
           initialZoom: 13,
         ),
         children: [

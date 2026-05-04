@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kiedys_dojade/features/history/presentation/providers/history_provider.dart';
 import 'package:kiedys_dojade/features/navigation/domain/entities/path_item.dart';
 import 'package:kiedys_dojade/features/navigation/domain/usecases/get_closest_stop_usecase.dart';
+import 'package:kiedys_dojade/features/navigation/presentation/providers/location_provider.dart';
 import 'package:kiedys_dojade/features/navigation/presentation/providers/trip_planner_provider.dart';
 import 'package:kiedys_dojade/shared/domain/entities/stop_group.dart';
 import 'package:kiedys_dojade/shared/presentation/providers/stop_groups_provider.dart';
@@ -75,15 +75,11 @@ class _TripPlannerWidgetState extends ConsumerState<TripPlannerWidget> {
   }
 
   Future<void> _fillFromLocation() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-    }
-    if (permission == LocationPermission.deniedForever ||
-        permission == LocationPermission.denied) return;
-
-    final position = await Geolocator.getCurrentPosition();
+    await ref.read(userLocationProvider.notifier).fetchLocation(context);
     if (!mounted) return;
+
+    final position = ref.read(userLocationProvider).asData?.value;
+    if (position == null) return;
 
     try {
       final stops = await ref.read(getClosestStopUseCaseProvider)(
